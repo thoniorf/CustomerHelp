@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-$conn = new mysqli("127.0.0.1", "moderator", "1234", "Ticketsys_db");
+$conn = new mysqli("127.0.0.1", "moderator", "", "Ticketsys_db");
 
 $result = $conn->query("SELECT * FROM User");
 
