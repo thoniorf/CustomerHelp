@@ -5,13 +5,9 @@ $host = getenv('host_db');
 $user = getenv('user_db');
 $pswd = getenv('pswd_db');
 
-<<<<<<< HEAD
 // Create connection
 //$conn = new mysqli("localhost", "moderator", "1234");
 $conn = new mysqli($host,$user,$pswd);
-=======
-$conn = new mysqli("127.0.0.1", "moderator", "", "Ticketsys_db");
->>>>>>> fd285205b045914dadafab342cdeb7a284b81b0b
 
 // Check connection
 if ($conn->connect_error) {
