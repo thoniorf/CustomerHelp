@@ -6,7 +6,6 @@ $user = getenv('user_db');
 $pswd = getenv('pswd_db');
 
 // Create connection
-//$conn = new mysqli("localhost", "moderator", "1234");
 $conn = new mysqli($host,$user,$pswd);
 
 // Check connection
