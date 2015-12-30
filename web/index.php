@@ -1,5 +1,5 @@
 <?php
-	require_once $INCLUDE_PATH . '/config.php';
+	require_once './includes/config.php';
 	require_once $TEMPLATES_PATH . '/header.php';
 ?>
 <body>
