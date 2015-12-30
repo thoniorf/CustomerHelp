@@ -1,13 +1,14 @@
 <?php
-require_once './includes/config.php';
-require_once './templates/header.php';
-
+	require_once( $INCLUDE_PATH . "/config.php" );
+	require_once( $TEMPLATES_PATH . "/header.php" );
 ?>
 <body>
-<div class="container">
-</div>
+	<div class="container">
+		<?php 
+			require_once($CONTENTS_PATH . $current_content);
+		?>
+	</div>
 </body>
- 
 <?php 
-require_once './templates/footer.php';
+	require_once ($TEMPLATES_PATH . "/footer.php");
 ?>
