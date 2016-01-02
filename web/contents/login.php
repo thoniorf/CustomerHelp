@@ -8,7 +8,7 @@
             System</h3></p>
         <p class="text-justify">Please login below or signup.</p>
         <hr>
-        <form class="form-horizontal" action="./include/user_verification.php" method="post" onsubmit="">
+        <form class="form-horizontal" action="./includes/user_verification.php" method="post" onsubmit="">
             <div class="form-group">
                 <label for="inputEmail" class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-10">
