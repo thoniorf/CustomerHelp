@@ -14,8 +14,8 @@ $paswd = filter_var($_POST['inputPassword'], FILTER_SANITIZE_STRING);
 $paswd = sha1($paswd);
 // Prepare the statemnt
 $stmt = $conn->prepare("SELECT * FROM ticketsys_db.User WHERE Email=? AND Password=?;");
-// // Bind vars
-//$stmt->bind_param("ss", $email, $paswd);
+// Bind vars
+if(!$stmt->bind_param("ss", $email, $paswd)){trigger_error("there was an error....".$mysqli->error, E_USER_WARNING);}
 
 // $stmt->execute();
 // $result = $stmt->get_result();
