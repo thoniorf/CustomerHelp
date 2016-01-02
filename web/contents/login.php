@@ -3,7 +3,7 @@
 
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-8">
         <p class="lead text-center"><h3>Welcome to our Customer Ticket
             System</h3></p>
         <p class="text-justify">Please login below or signup.</p>
