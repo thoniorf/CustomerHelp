@@ -3,10 +3,8 @@
 
 
 <div class="row">
-    <div class="col-xs-4 col-xs-offset-4">
-        <p>
+    <div class="col-xs-6 col-xs-offset-3">
         <h3>Welcome to our Customer Ticket System</h3>
-        </p>
         <p>Please login below or signup.</p>
         <hr>
         <form class="form-horizontal"
@@ -36,8 +34,6 @@
             </div>
         </form>
         <hr>
-        <p>
         <h4>Forgot your password ?</h4>
-       </p>
     </div>
 </div>
