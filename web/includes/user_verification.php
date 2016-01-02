@@ -13,7 +13,7 @@ $paswd = filter_var($_POST['inputPassword'], FILTER_SANITIZE_STRING);
 // Encrypt passwd
 $paswd = password_hash($paswd,PASSWORD_BCRYPT);
 // Prepare the statemnt
-$stmt = $conn->prepare("SELECT * FROM ticketsys_db.User WHERE Email=? AND Password=?;");
+$stmt = $conn->prepare("SELECT * FROM ticketsys_db.User WHERE Email=? AND Passwd=?;");
 // Bind vars
 $stmt->bind_param("ss", $email, $paswd);
 // Execute, get results and fetch
