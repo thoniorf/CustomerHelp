@@ -1,6 +1,6 @@
 <?php
 ?>
-<script src="./js/scripts/login_validation.js"</script>
+
 
 <div class="row">
     <div class="col-xs-12">
