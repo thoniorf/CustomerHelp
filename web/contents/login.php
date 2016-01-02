@@ -8,7 +8,7 @@
         <p>Please login below or signup.</p>
         <hr>
         <form class="form-horizontal"
-            action="./includes/user_verification.php" method="post"
+            action="./includes/user_verification.php" method="POST"
             onsubmit="">
             <div class="form-group">
                 <label for="inputEmail" class="col-sm-2 control-label">Email</label>
