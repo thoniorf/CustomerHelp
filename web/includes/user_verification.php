@@ -24,10 +24,8 @@ $stmt->execute();
 if($stmt->bind_result($Bind_idUser)){
 	$stmt->fetch();
 	// If Bind_idUser is not null set user_id session
-	if($Bind_idUser != null){
 		$_SESSION['user_id'] = $Bind_idUser;
 		header( "refresh:5;url=../index.php" ); 
-	}
 }
 // If false login failed
 else
