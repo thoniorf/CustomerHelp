@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 $email = filter_var($_POST['inputEmail'], FILTER_SANITIZE_STRING);
 $paswd = filter_var($_POST['inputPassword'], FILTER_SANITIZE_STRING);
 // Encrypt passwd
-$paswd = sha1($paswd);
+$paswd = password__hash($paswd,PASSWORD_BCRYPT);
 // Prepare the statemnt
 $stmt = $conn->prepare("SELECT * FROM ticketsys_db.User WHERE Email=? AND Password=?;");
 // Bind vars
