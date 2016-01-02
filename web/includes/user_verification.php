@@ -15,7 +15,7 @@ $paswd = sha1($paswd);
 // Prepare the statemnt
 $stmt = $conn->prepare("SELECT * FROM ticketsys_db.User WHERE Email=? AND Password=?;");
 // // Bind vars
-$stmt->bind_param("ss", $email, $paswd);
+//$stmt->bind_param("ss", $email, $paswd);
 
 // $stmt->execute();
 // $result = $stmt->get_result();
