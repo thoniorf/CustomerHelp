@@ -27,5 +27,6 @@ $outp = '{"records":[' . $outp . ']}';
 $conn->close ();
 
 print ($outp) ;
+print password_hash("1234",PASSWORD_BCRYPT);
 ?>
 
