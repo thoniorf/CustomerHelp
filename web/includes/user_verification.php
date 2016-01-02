@@ -13,7 +13,7 @@ $paswd = filter_var($_POST['inputPassword'], FILTER_SANITIZE_STRING);
 // Encrypt passwd
 $paswd = password_hash($paswd,PASSWORD_BCRYPT);
 // Prepare the statemnt
-$stmt = $conn->prepare("SELECT * FROM ticketsys_db.User WHERE Email=? AND Passwd=?;");
+$stmt = $conn->prepare("SELECT idUser FROM ticketsys_db.User WHERE Email=? AND Passwd=?;");
 if(!$stmt){
 	$conn->error;
 }
@@ -21,14 +21,15 @@ if(!$stmt){
 $stmt->bind_param("ss", $email, $paswd);
 // Execute, get results and fetch
 $stmt->execute();
-$result = $stmt->get_result();
-$row = $row->fetch_assoc();
-// If row is not null set user_id session
-if($row != null){
-	$_SESSION['user_id'] = $row['idUser'];
-	print "<script>window.location.reload();<script>";
+if($stmt->bind_result($Bind_idUser)){
+	$stmt->fetch();
+	// If Bind_idUser is not null set user_id session
+	if($Bind_idUser != null){
+		$_SESSION['user_id'] = $Bind_idUser;
+		header( "refresh:5;url=../index.php" ); 
+	}
 }
-// If null login failed
+// If false login failed
 else
 {
 		
