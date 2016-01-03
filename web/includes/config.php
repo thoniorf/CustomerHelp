@@ -7,14 +7,8 @@ $host = getenv ( 'host_db' );
 $user = getenv ( 'user_db' );
 $pswd = getenv ( 'pswd_db' );
 
-$INCLUDE_PATH = "./include";
+$INCLUDES_PATH = "./include";
 $TEMPLATES_PATH = "./templates";
 $CONTENTS_PATH = "./contents";
-
-if (! isset ( $_SESSION ['user_id'] )) {
-	$current_content = "/login.php";
-} else {
-	$current_content = "/home.php";
-}
 
 ?>
