@@ -7,8 +7,14 @@ require_once $TEMPLATES_PATH . '/header.php';
 	<div class="container-fluid">
 		<?php
 		require_once $TEMPLATES_PATH . '/topbar.php';
-		require_once $CONTENTS_PATH . $current_content;
 		?>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <?php 
+    				require_once $CONTENTS_PATH . $current_content;
+				?>
+            </div>
+        </div>
 	</div>
 </body>
 <?php

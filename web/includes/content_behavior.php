@@ -6,7 +6,7 @@ if (!isset( $_SESSION['user_id'])) {
 	}
 } else {
 	if(isset($_GET['content'])){
-		$current_content = $_GET['content'];
+		$current_content ='/' .  $_GET['content'] . '.php';
 	} else {
 		$current_content = "/home.php";
 	}

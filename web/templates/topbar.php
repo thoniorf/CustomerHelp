@@ -19,7 +19,7 @@
       <ul class="nav navbar-nav">
         <li class="<?php print ((empty($content) || $content == 'home')?"active":"");?>"><a href="index.php?content=home">View Tickets </a></li>
         <li class="<?php print (($content == 'new_ticket')?"active":"");?>"><a href="index.php?content=new_ticket">Create Tickets</a></li>
-        <li class="<?php print ((isset($_SESSION['role']) && $_SESSION['role']=="moderator")?"hidden ":"show "); print (($content == 'admin')?"active":"");?>"><a href="index.php?content=admin">Administration</a></li>
+        <li class="<?php print ((isset($_SESSION['user_role']) && $_SESSION['user_role']=="Moderator")?"show ":"hidden "); print (($content == 'admin')?"active":"");?>"><a href="index.php?content=admin">Administration</a></li>
         <li class="<?php print (($content == 'logout')?"active":"");?>"><a href="index.php?content=logout">Logout</a></li>
       </ul>
       <p class="navbar-text navbar-right"><?php print((isset($_SESSION['user_id']))?"Signed in as <strong>" . $_SESSION['user_email'] . "</strong>":"Not signed in");?></p>
