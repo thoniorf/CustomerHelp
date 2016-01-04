@@ -7,7 +7,7 @@ $host = getenv ( 'host_db' );
 $user = getenv ( 'user_db' );
 $pswd = getenv ( 'pswd_db' );
 
-$INCLUDES_PATH = "./include";
+$INCLUDES_PATH = "./includes";
 $TEMPLATES_PATH = "./templates";
 $CONTENTS_PATH = "./contents";
 

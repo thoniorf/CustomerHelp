@@ -1,6 +1,6 @@
 <?php
 require_once './includes/config.php';
-require_once $INCLUDES_PATH . '/content_behavior';
+require_once $INCLUDES_PATH . '/content_behavior.php';
 require_once $TEMPLATES_PATH . '/header.php';
 ?>
 <body>
