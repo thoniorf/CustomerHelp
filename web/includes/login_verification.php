@@ -13,7 +13,7 @@ if (isset ( $_POST['inputEmail'] ) && isset ( $_POST['inputPassword'] )) {
 	$paswd = filter_var ( $_POST['inputPassword'], FILTER_SANITIZE_STRING );
 	
 	// Prepare the statemnt
-	$stmt = $conn->prepare ( "SELECT idUser, Passwd FROM ticketsys_db.User WHERE Email=?" );
+	$stmt = $conn->prepare ( "SELECT idUser, Email, Passwd Passwd FROM ticketsys_db.User WHERE Email=?" );
 	if (!$stmt) {
 		$conn->error;
 	}
@@ -21,10 +21,11 @@ if (isset ( $_POST['inputEmail'] ) && isset ( $_POST['inputPassword'] )) {
 	$stmt->bind_param ( "s", $email);
 	// Execute, get results and fetch
 	$stmt->execute();
-	if ($stmt->bind_result($Bind_idUser, $Bind_Passwd)) {
+	if ($stmt->bind_result($Bind_idUser,$Bind_Email, $Bind_Passwd)) {
 		$stmt->fetch ();
 		if (!empty($Bind_idUser) && password_verify($paswd,$Bind_Passwd)) {
 			$_SESSION ['user_id'] = $Bind_idUser;
+			$_SESSION['user_email'] = $Bind_Email;
 		} else {
 			$error_login = "show";
 		}

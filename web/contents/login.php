@@ -44,7 +44,7 @@ if (!isset($_SESSION['user_id'])) :
 
 <?php
 else :
-header("refresh:5;url=index.php");
+header("refresh:3;url=index.php");
 ?>
 <div class="row">
     <div class="col-xs-6 col-xs-offset-3">
