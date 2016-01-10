@@ -15,20 +15,13 @@ class Ticket{
    }
 		
 }
-$query = "SELECT idTicket, Title, AssignedTo, Date, Label FROM ticketsys_db.Ticket WHERE Owner= ? AND Title LIKE ? AND AssignedTo LIKE ? AND Date >= CAST( ? AS DATE ) AND Label LIKE ?;";
+$query = "SELECT idTicket, Title, M.Email, Date, Label FROM ticketsys_db.Ticket ";
+$query.="LEFT JOIN ticketsys_db.User as M ON (M.idUser = AssignedTo) ";
+$query.="WHERE Owner= ?  AND Title LIKE ? AND (AssignedTo IS NULL OR AssignedTo LIKE '%') AND Date >= CAST( ? AS DATE ) AND Label LIKE ?;";
 $tickets = array();
-$title = (!empty($_GET['inputSubject']))?$_GET['inputSubject']:'%';
-if(!empty($_GET['inputAssignment']))
-{
-	$assignment = $_GET['inputAssignment'];
-}
-else 
-{
-	$assignment = '%';
-	$query = "SELECT idTicket, Title, AssignedTo, Date, Label FROM ticketsys_db.Ticket WHERE Owner= ?  AND Title LIKE ? AND (AssignedTo IS NULL OR AssignedTo LIKE ?) AND Date >= CAST( ? AS DATE ) AND Label LIKE ?;";
-}
+$title = (!empty($_GET['inputSubject']))?"%" . $_GET['inputSubject'] . "%":'%';
 $date = (!empty($_GET['inputDate']))?$_GET['inputDate']:'1970-01-01';
-$label = (!empty($_GET['inputLabel']))?$_GET['inputLabel']:'%';
+$label = (!empty($_GET['inputLabel']))?"%" . $_GET['inputLabel'] . "%":'%';
 $ticket_error = 'hidden';
 
 // Create new connection
@@ -43,7 +36,7 @@ if (!$stmt) {
 	$conn->error;
 }
 // Bind vars
-if(!$stmt->bind_param ("issss", $_SESSION['user_id'], $title, $assignment, $date, $label))
+if(!$stmt->bind_param ("isss", $_SESSION['user_id'], $title, $date, $label))
 {
 	$stmt->error;
 }
