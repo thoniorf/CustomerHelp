@@ -12,19 +12,29 @@ class Message {
 	}
 }
 
+// COUNT ALL MESSAGE
+$query = "SELECT IdMessage FROM ticketsys_db.Message WHERE idTicket =" . $_GET ['idTicket'];
+$res = $conn->query ( $query );
+$num_rows = $res->num_rows;
+
 // FETCH MESSAGE
 $messages = array ();
-$limit = (!empty($_GET['limit']))?$_GET['limit']:0;
+$limit = (isset($_GET['limit']))?$_GET['limit']:0;
+$offset = 5;
+
+$upper = ($limit + $offset - $num_rows<0)?$limit + $offset:"disabled";
+$lower = ($limit -$offset>=0)?$limit - $offset:"disabled";
+
 $query = "Select M.IdMessage, U.Email, M.MessageText, DATE(M.Date) as Date ";
 $query .= "FROM ticketsys_db.Message as M JOIN ticketsys_db.User as U ON (U.idUser = M.idUser) ";
-$query .= "WHERE M.idTicket = ? LIMIT ?, 5;";
+$query .= "WHERE M.idTicket = ? LIMIT ?, " .$offset . ";";
 
 $stmt = $conn->prepare ( $query );
 if (! $stmt) {
 	$conn->error;
 }
 // Bind vars
-if (! $stmt->bind_param ( "ii", $_GET ['idTicket'],$limit )) {
+if (! $stmt->bind_param ( "ii", $_GET ['idTicket'], $limit )) {
 	$stmt->error;
 }
 

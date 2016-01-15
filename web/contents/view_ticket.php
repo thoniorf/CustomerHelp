@@ -11,15 +11,20 @@ require_once $INCLUDES_PATH . '/singleticket.php';
         <hr>
         <div class="panel panel-default">
             <div class="panel-body">
-                <p><strong>Id:</strong> <?php print $ticket->id?></p>
-		        <p><strong>Subject:</strong> <?php print $ticket->subject?></p>
-		        <p><strong>Creation date:</strong> <?php print $ticket->date?></p>
-		        <p><strong>Assigned to:</strong> <?php print $ticket->assignedTo?></p>
-		        <p><strong>Label:</strong> <?php print $ticket->label?></p>
-		        <p><strong>Category:</strong> <?php print $ticket->category?></p>
-		        <p><strong>Product:</strong> <?php print $ticket->product?></p>
-                <br/>
-		        <p><strong>Ticket text:</strong> <br/> <?php print $ticket->description?></p>
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+		                <p><strong>Id:</strong> <?php print $ticket->id?></p>
+				        <p><strong>Subject:</strong> <?php print $ticket->subject?></p>
+				        <p><strong>Creation date:</strong> <?php print $ticket->date?></p>
+				        <p><strong>Assigned to:</strong> <?php print $ticket->assignedTo?></p>
+				        <p><strong>Label:</strong> <?php print $ticket->label?></p>
+				        <p><strong>Category:</strong> <?php print $ticket->category?></p>
+				        <p><strong>Product:</strong> <?php print $ticket->product?></p>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+			            <p><strong>Ticket text:</strong> <br/> <?php print $ticket->description?></p>
+                    </div>
+                </div>
             </div>
         </div>
 <?php
@@ -31,38 +36,43 @@ require_once $INCLUDES_PATH . '/fetchmessage.php';
         <div class="row">
 	        <div class="col-xs-8 col-xs-offset-2">
 	           <a class="btn btn-primary btn-block" href="<?php print "/index.php?content=view_ticket&idTicket=" . $_GET['idTicket'] . "&reply=r"?>" >Send a new message</a>
+               <a class="btn btn-primary btn-block" href="<?php print "/index.php?content=modifyticket&idTicket=" . $_GET['idTicket'] ?>" >Edit this ticket</a>
 	        </div>
         </div>
         <hr>
         <div class="row">
-        <div class="col-xs-12">
-        <p class="lead">Messages: </p>
-        <div class="panel panel-default">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <?php
-                    	foreach ($messages as $key => $message):
-                    ?>
-                    <tr>
-	                    <td>
-                            <p><strong>User:</strong> <?php print $message->user;?></p>
-                            <p><strong>Date:</strong> <?php print $message->date;?></p>
-                            <p><strong>Message text:</strong> <br/> <?php print $message->text;?></p>
-	                    </td>
-                    </tr>
-                    <?php
-                    	endforeach;
-                    ?>
-                </table>
-            </div>
-        </div>
-        <nav>
-              <ul class="pager">
-                <li class="previous <?php print (($limit==0)?"disabled":""); ?> "><a href="<?php print "index.php?content=view_ticket&idTicket=" . $_GET['idTicket'] . "&limit=" . ($limit=($limit>0)?$limit-5:0) ;?>"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                <li class="next <?php print (($limit==50)?"disabled":""); ?>" ><a href="<?php print "index.php?content=view_ticket&idTicket=" . $_GET['idTicket'] . "&limit=" . ($limit+=5) ; ?>">Next <span aria-hidden="true">&rarr;</span></a></li>
-              </ul>
-            </nav>
-        </div>
+	        <div class="col-xs-12">
+		        <p class="lead">Messages: </p>
+		        <?php if($num_rows >0): ?>
+		        <div class="panel panel-default">
+		            <div class="table-responsive">
+		                <table class="table table-striped">
+		                    <?php
+		                    	foreach ($messages as $key => $message):
+		                    ?>
+		                    <tr>
+			                    <td>
+		                            <p><strong>User:</strong> <?php print $message->user;?></p>
+		                            <p><strong>Date:</strong> <?php print $message->date;?></p>
+		                            <p><strong>Message text:</strong> <br/> <?php print $message->text;?></p>
+			                    </td>
+		                    </tr>
+		                    <?php
+		                    	endforeach;
+		                    ?>
+		                </table>
+		            </div>
+		        </div>
+	            <nav>
+	              <ul class="pager">
+	                <li class="previous <?php print $lower; ?> "><a <?php if($lower !== "disabled"):?>href="<?php print buildURI("GET",'content','idTicket') . "limit=". $lower ;?>"<?php endif;?>><span aria-hidden="true">&larr;</span> Previous</a></li>
+	                <li class="next <?php print $upper; ?>" ><a <?php if($upper !== "disabled"):?>href="<?php print buildURI("GET",'content','idTicket') . "limit=". $upper ; ?>"<?php endif;?>>Next <span aria-hidden="true">&rarr;</span></a></li>
+	              </ul>
+	            </nav>
+	            <?php else:?>
+	            <p>No messages at all.</p>
+	            <?php endif;?>
+	        </div>
         </div>
 <?php
 // SEND NEW REPLY FORM
@@ -95,6 +105,7 @@ else:
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-default" >Submit</button>
+                    <a class="btn btn-default " href="<?php print "index.php?content=view_ticket&idTicket=" . $_GET['idTicket']?>" >Back</a>
                 </div>
         </form>
         </div>

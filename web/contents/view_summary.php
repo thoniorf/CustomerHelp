@@ -58,6 +58,7 @@ require_once $INCLUDES_PATH . '/viewtickets.php';
        <hr>
        <div class="row">
 		<div class="col-xs-12">
+        <?php if($num_rows >0):?>
 			<div class="table-responsive">
 				<table class="table table-hover">
                 <thead>
@@ -72,21 +73,30 @@ require_once $INCLUDES_PATH . '/viewtickets.php';
                 </thead>
                 <tbody>
 	                <?php
-		                foreach ($tickets as $key => $ticket)
-		                {
-		                	print "<tr>";
-		                	print "<th scope=\"row\">" . $key . "</th>";
-		                	print "<td>" . $ticket->subject . "</td>";
-		                	print "<td>" . $ticket->date . "</td>";
-		                	print "<td>" . $ticket->assignedTo . "</td>";
-		                	print "<td>" . $ticket->label . "</td>";
-		                	print "<td> <a href=\"index.php?content=view_ticket&idTicket=" . $ticket->id . "\">Open</a></td>";
-        					print "</tr>";
-		                }
+			                foreach ($tickets as $key => $ticket)
+			                {
+			                	print "<tr>";
+			                	print "<th scope=\"row\">" . $key . "</th>";
+			                	print "<td>" . $ticket->subject . "</td>";
+			                	print "<td>" . $ticket->date . "</td>";
+			                	print "<td>" . $ticket->assignedTo . "</td>";
+			                	print "<td>" . $ticket->label . "</td>";
+			                	print "<td> <a href=\"index.php?content=view_ticket&idTicket=" . $ticket->id . "\">Open</a></td>";
+	        					print "</tr>";
+			                }
 	                ?>
                 </tbody>
 				</table>
 			</div>
+            <nav>
+              <ul class="pager">
+                <li class="previous <?php print $lower; ?> "><a <?php if($lower !== "disabled"):?>href="<?php print buildURI("GET",'content','inputSubject','inputDate','inputLabel') . "limit=". $lower;?>"<?php endif;?>><span aria-hidden="true">&larr;</span> Previous</a></li>
+                <li class="next <?php print $upper; ?>" ><a <?php if($upper !== "disabled"):?>href="<?php print buildURI("GET",'content','inputSubject','inputDate','inputLabel') . "limit=". $upper; ?>"<?php endif;?>>Next <span aria-hidden="true">&rarr;</span></a></li>
+              </ul>
+            </nav>
+           <?php else:?>
+            <p>The aren't tickets yet.</p>
+           <?php endif;?>
 		</div>
         </div>
     </div>

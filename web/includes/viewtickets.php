@@ -15,14 +15,6 @@ class Ticket{
    }
 		
 }
-$query = "SELECT idTicket, Title, M.Email, Date, Label FROM ticketsys_db.Ticket ";
-$query.="LEFT JOIN ticketsys_db.User as M ON (M.idUser = AssignedTo) ";
-$query.="WHERE Owner= ?  AND Title LIKE ? AND (AssignedTo IS NULL OR AssignedTo LIKE '%') AND Date >= CAST( ? AS DATE ) AND Label LIKE ?;";
-$tickets = array();
-$title = (!empty($_GET['inputSubject']))?"%" . $_GET['inputSubject'] . "%":'%';
-$date = (!empty($_GET['inputDate']))?$_GET['inputDate']:'1970-01-01';
-$label = (!empty($_GET['inputLabel']))?"%" . $_GET['inputLabel'] . "%":'%';
-$ticket_error = 'hidden';
 
 // Create new connection
 $conn = new mysqli ( $host, $user, $pswd );
@@ -31,6 +23,25 @@ $conn = new mysqli ( $host, $user, $pswd );
 if ($conn->connect_error) {
 	die ( "Connection failed: " . $conn->connect_error );
 }
+
+// COUNT ALL Ticket
+$query = "SELECT idTicket FROM ticketsys_db.Ticket WHERE Owner=" . $_SESSION['user_id'] . ";";
+$res = $conn->query ( $query );
+$num_rows = $res->num_rows;
+
+$limit = (isset($_GET['limit']))?$_GET['limit']:0;
+$offset = 5;
+// FETCH USER TICKETS
+$query = "SELECT idTicket, Title, M.Email, Date, Label FROM ticketsys_db.Ticket ";
+$query.="LEFT JOIN ticketsys_db.User as M ON (M.idUser = AssignedTo) ";
+$query.="WHERE Owner= ?  AND Title LIKE ? AND (AssignedTo IS NULL OR AssignedTo LIKE '%') AND Date >= CAST( ? AS DATE ) AND Label LIKE ? LIMIT " .$limit."," .$offset.";";
+$tickets = array();
+$title = (!empty($_GET['inputSubject']))?"%" . $_GET['inputSubject'] . "%":'%';
+$date = (!empty($_GET['inputDate']))?$_GET['inputDate']:'1970-01-01';
+$label = (!empty($_GET['inputLabel']))?"%" . $_GET['inputLabel'] . "%":'%';
+$ticket_error = 'hidden';
+
+
 $stmt = $conn->prepare ($query);
 if (!$stmt) {
 	$conn->error;
@@ -43,9 +54,10 @@ if(!$stmt->bind_param ("isss", $_SESSION['user_id'], $title, $date, $label))
 
 // Execute
 $stmt->execute();
+$stmt->store_result();
+
 if($stmt->bind_result($Bind_idTicket,$Bind_Title,$Bind_AssignedTo,$Bind_Date,$Bind_Label))
 {
-
 	while($stmt->fetch())
 	{
 		$tickets[]= new Ticket($Bind_idTicket,$Bind_Title,(($Bind_AssignedTo != NULL)?$Bind_AssignedTo:"None"),$Bind_Date,$Bind_Label);
@@ -53,6 +65,9 @@ if($stmt->bind_result($Bind_idTicket,$Bind_Title,$Bind_AssignedTo,$Bind_Date,$Bi
 } else {
 	$ticket_error = "show";
 }
+$upper = ($limit + $offset - $num_rows<0)?$limit + $offset:"disabled";
+$lower = ($limit -$offset>0)?$limit - $offset:"disabled";
+
 $stmt->close();
 $conn->close();
 ?>
