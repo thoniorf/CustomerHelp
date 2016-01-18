@@ -3,6 +3,7 @@ class Ticket {
 	public $id;
 	public $subject;
 	public $date;
+	public $edit;
 	public $assignedTo;
 	public $label;
 	public $description;
@@ -15,7 +16,7 @@ $ticket_error = 'hidden';
 if (! isset ( $_GET ['idTicket'] )) {
 	$ticket_error = 'show';
 } else {
-	$query = "SELECT T.idTicket, T.Title, M.Email, T.Date, T.Label, T.Description, C.Name, P.Name FROM ticketsys_db.Ticket as T ";
+	$query = "SELECT T.idTicket, T.Title, M.Email, T.Date, T.LastEdit, T.Label, T.Description, C.Name, P.Name FROM ticketsys_db.Ticket as T ";
 	// JOIN WITH USER find ticket'sassignment
 	$query .= "LEFT JOIN ticketsys_db.User as M ON (M.idUser = T.AssignedTo) ";
 	// JOIN WITH CATEGORY find ticket's category
@@ -45,7 +46,7 @@ if (! isset ( $_GET ['idTicket'] )) {
 	// Execute, Store and Fetch
 	$stmt->execute ();
 	$stmt->store_result ();
-	if ($stmt->bind_result ( $ticket->id, $ticket->subject, $ticket->assignedTo, $ticket->date, $ticket->label, $ticket->description, $ticket->category, $ticket->product )) {
+	if ($stmt->bind_result ( $ticket->id, $ticket->subject, $ticket->assignedTo, $ticket->date, $ticket->edit,$ticket->label, $ticket->description, $ticket->category, $ticket->product )) {
 		
 		while ( $stmt->fetch () ) 
 		{
