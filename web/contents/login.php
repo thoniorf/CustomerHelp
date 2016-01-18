@@ -37,8 +37,6 @@ if (!isset($_SESSION['user_id'])) :
                 </div>
             </div>
         </form>
-        <hr>
-        <h4>Forgot your password ?</h4>
     </div>
 </div>
 
