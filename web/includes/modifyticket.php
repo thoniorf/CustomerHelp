@@ -14,7 +14,7 @@ if(isset($_POST['inputSubject'],$_POST['inputCategory'],$_POST['inputProduct'],$
 	$subject = filter_var ( $_POST['inputSubject'], FILTER_SANITIZE_STRING );
 	$product = filter_var ( $_POST['inputProduct'], FILTER_SANITIZE_STRING );
 	$category = filter_var ( $_POST['inputCategory'], FILTER_SANITIZE_STRING );
-	$description .= filter_var ( $_POST['inputDescription'], FILTER_SANITIZE_STRING );
+	$description = filter_var ( $_POST['inputDescription'], FILTER_SANITIZE_STRING );
 	
 	// Prepare the statemnt
 	$stmt = $conn->prepare ( "UPDATE ticketsys_db.Ticket SET Title = ?,Description = ?,Category = ?,Product = ?, LastEdit = NOW() WHERE idTicket= ?;" );

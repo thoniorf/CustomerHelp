@@ -16,7 +16,7 @@ require_once $INCLUDES_PATH . '/singleticket.php';
 		                <p><strong>Id:</strong> <?php print $ticket->id?></p>
 				        <p><strong>Subject:</strong> <?php print $ticket->subject?></p>
 				        <p><strong>Creation date:</strong> <?php print $ticket->date?></p>
-                        <p><strong>Last edit:</strong><?php $ticket->edit?>
+                        <p><strong>Last edit:</strong> <?php print $ticket->edit?>
 				        <p><strong>Assigned to:</strong> <?php print $ticket->assignedTo?></p>
 				        <p><strong>Label:</strong> <?php print $ticket->label?></p>
 				        <p><strong>Category:</strong> <?php print $ticket->category?></p>
