@@ -26,6 +26,14 @@ if (!isset($_SESSION['user_id'])) :
                 </div>
             </div>
             <div class="form-group">
+                <label for="inputUser" class="col-sm-3 control-label">Your Username</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"
+                        id="inputUser" name="inputUser"
+                        placeholder="Username" required>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="inputPassword"
                     class="col-sm-3 control-label">Your password</label>
                 <div class="col-sm-9">

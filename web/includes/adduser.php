@@ -1,6 +1,6 @@
 <?php
 $registration_error = "hidden";
-if (isset ( $_POST['inputEmail'] ) && isset ( $_POST['inputPassword'] )) {
+if (isset ( $_POST['inputEmail'],$_POST['inputUser'],$_POST['inputPassword'])) {
 	
 		// Create new connection
 		$conn = new mysqli ( $host, $user, $pswd );
@@ -10,17 +10,18 @@ if (isset ( $_POST['inputEmail'] ) && isset ( $_POST['inputPassword'] )) {
 			die ( "Connection failed: " . $conn->connect_error );
 		}
 		// Filter fieds
+		$user  = filter_var ( $_POST['inputUser'], FILTER_SANITIZE_STRING );
 		$email = filter_var ( $_POST['inputEmail'], FILTER_SANITIZE_STRING );
 		$paswd = filter_var ( $_POST['inputPassword'], FILTER_SANITIZE_STRING );
 		// Encrypt paswd
 		$paswd = password_hash($paswd,PASSWORD_BCRYPT);
 		// Prepare the statemnt
-		$stmt = $conn->prepare ( "Insert into ticketsys_db.User (Email,Passwd) values (?,?);" );
+		$stmt = $conn->prepare ( "Insert into ticketsys_db.User (Email,Passwd,Username) values (?,?,?);" );
 		if (!$stmt) {
 			$conn->error;
 		}
 		// Bind vars
-		$stmt->bind_param ( "ss", $email,$paswd);
+		$stmt->bind_param ( "sss", $email,$paswd,$user);
 		// Execute
 		$stmt->execute();
 		if($stmt->affected_rows == -1) {
