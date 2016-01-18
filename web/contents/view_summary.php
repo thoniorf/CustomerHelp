@@ -63,7 +63,7 @@ require_once $INCLUDES_PATH . '/viewtickets.php';
 				<table class="table table-hover">
                 <thead>
                     <tr>
-	                    <th>#</th>
+	                    <th>Id</th>
 	                    <th>Subject</th>
 	                    <th>Date</th>
 	                    <th>Assigned to</th>
@@ -76,7 +76,7 @@ require_once $INCLUDES_PATH . '/viewtickets.php';
 			                foreach ($tickets as $key => $ticket)
 			                {
 			                	print "<tr>";
-			                	print "<th scope=\"row\">" . $key . "</th>";
+			                	print "<th scope=\"row\">" . $ticket->id . "</th>";
 			                	print "<td>" . $ticket->subject . "</td>";
 			                	print "<td>" . $ticket->date . "</td>";
 			                	print "<td>" . $ticket->assignedTo . "</td>";
