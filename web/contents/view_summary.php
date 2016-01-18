@@ -29,15 +29,22 @@ require_once $INCLUDES_PATH . '/viewtickets.php';
             </div>
             <div class="row">
 	            <div class="form-group">
-		            <div class="col-md-6 col-xs-12">
+		            <div class="col-md-4 col-xs-12">
 			                <label for="inputAssignment" class="control-label"> Assigned to:</label>
 			                    <input type="text" class="form-control"
 			                        id="inputAssignment" name="inputAssignment"
 			                        placeholder="Ticket Assignment">
 		            </div>
                     
-		            <div class="col-md-6 col-xs-12">
-		                    <label for="inputLabel" class="control-label"> Labeled:</label>
+                    <div class="col-md-4 col-xs-12">
+                            <label for="inputId" class="control-label"> Id:</label>
+                            <input type="text" class="form-control"
+			                        id="inputId" name="inputId"
+			                        placeholder="Ticket Id">
+                    </div>
+           
+		            <div class="col-md-4 col-xs-12">
+		                    <label for="inputLabel" class="control-label"> Label:</label>
                             <select class="form-control" id="inputLabel" name="inputLabel">
                             <option value="0">Open</option>
                             <option value="1">Solved</option>
