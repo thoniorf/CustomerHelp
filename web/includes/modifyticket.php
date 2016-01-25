@@ -74,13 +74,13 @@ $stmt->close();
 
 // FETCH TICKET
 $query = "SELECT T.idTicket, T.Title,T.Description, T.Category, T.Product FROM ticketsys_db.Ticket as T ";
-$query .= "WHERE T.Owner= ? AND T.idTicket= ? ;";
+$query .= "WHERE (T.Owner= ? OR T.AssignedTo = ? OR T.AssignedTo IS NULL) AND T.idTicket= ? ;";
 $stmt = $conn->prepare ( $query );
 if (! $stmt) {
 	$conn->error;
 }
 // Bind vars
-if (! $stmt->bind_param ( "ii", $_SESSION ['user_id'], $_GET ['idTicket'] )) {
+if (! $stmt->bind_param ( "iii", $_SESSION ['user_id'], $_SESSION ['user_id'], $_GET ['idTicket'] )) {
 	$stmt->error;
 }
 
