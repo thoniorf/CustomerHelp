@@ -1,8 +1,9 @@
-<?php
-require_once $INCLUDES_PATH . '/singleticket.php';
-?>
 <div class="row">
-    <div class="col-xs-8 col-xs-offset-2">
+    <div class="col-md-8 col-xs-12 col-md-offset-2">
+    
+		<?php
+		require_once $INCLUDES_PATH . '/singleticket.php';
+		?>
         <h3>Ticket review</h3>
         <p>Use the message box to append a new message.</p>
         <?php
@@ -36,6 +37,13 @@ require_once $INCLUDES_PATH . '/fetchmessage.php';
         <hr>
         <div class="row">
 	        <div class="col-xs-8 col-xs-offset-2">
+               <?php
+               		if($_SESSION['user_role']=="Tecnico"):
+               ?>
+               <a class="btn btn-primary btn-block" href="<?php print $INCLUDES_PATH . '/assignticket.php?' . "idTicket=" . $_GET['idTicket'];?>" >Self assign the ticket</a>
+               <?php
+               		endif;
+               ?>
 	           <a class="btn btn-primary btn-block" href="<?php print "/index.php?content=view_ticket&idTicket=" . $_GET['idTicket'] . "&reply=r"?>" >Send a new message</a>
                <a class="btn btn-primary btn-block" href="<?php print "/index.php?content=modifyticket&idTicket=" . $_GET['idTicket'] ?>" >Edit this ticket</a>
 	        </div>
@@ -44,7 +52,9 @@ require_once $INCLUDES_PATH . '/fetchmessage.php';
         <div class="row">
 	        <div class="col-xs-12">
 		        <p class="lead">Messages: </p>
-		        <?php if($num_rows >0): ?>
+		        <?php 
+		        	if($num_rows >0): 
+		        ?>
 		        <div class="panel panel-default">
 		            <div class="table-responsive">
 		                <table class="table table-striped">
@@ -66,21 +76,25 @@ require_once $INCLUDES_PATH . '/fetchmessage.php';
 		        </div>
 	            <nav>
 	              <ul class="pager">
-	                <li class="previous <?php print $lower; ?> "><a <?php if($lower !== "disabled"):?>href="<?php print buildURI("GET",'content','idTicket') . "limit=". $lower ;?>"<?php endif;?>><span aria-hidden="true">&larr;</span> Previous</a></li>
-	                <li class="next <?php print $upper; ?>" ><a <?php if($upper !== "disabled"):?>href="<?php print buildURI("GET",'content','idTicket') . "limit=". $upper ; ?>"<?php endif;?>>Next <span aria-hidden="true">&rarr;</span></a></li>
+	                <li class="previous <?php print $lower; ?> "><a <?php if($lower !== "disabled") print "href=\"" . buildURI("GET",'content','idTicket') . "limit=". $lower . "\"";?>><span aria-hidden="true">&larr;</span> Previous</a></li>
+	                <li class="next <?php print $upper; ?>" ><a <?php if($upper !== "disabled") print "href=\"". buildURI("GET",'content','idTicket') . "limit=". $upper . "\"";?>>Next <span aria-hidden="true">&rarr;</span></a></li>
 	              </ul>
 	            </nav>
-	            <?php else:?>
+	            <?php 
+	            	else:
+	            ?>
 	            <p>No messages at all.</p>
-	            <?php endif;?>
+	            <?php 
+	            	endif;
+	            ?>
 	        </div>
         </div>
 <?php
 // SEND NEW REPLY FORM
 else:
-require_once $INCLUDES_PATH . '/sendmessage.php';
-if(!empty($reply_sent)):
-header("refresh:3;url=index.php?content=view_ticket&idTicket=" . $_GET['idTicket'] );
+	require_once $INCLUDES_PATH . '/sendmessage.php';
+	if(!empty($reply_sent)):
+	header("refresh:3;url=index.php?content=view_ticket&idTicket=" . $_GET['idTicket'] );
 ?>
 <div class="row">
     <div class="col-xs-8 col-xs-offset-2">
