@@ -1,10 +1,26 @@
 <?php
 if (!isset( $_SESSION['user_id'])) {
-	$current_content = "/login.php";
-	if(isset($_GET['content']) && $_GET['content'] == 'registration'){
-		$current_content ='/' .  $_GET['content'] . '.php';
+	
+	if(isset($_GET['content']))
+	{
+		if($_GET['content'] == 'registration' || $_GET['content'] == 'login')
+		{
+			$current_content ='/' .  $_GET['content'] . '.php';
+			
+		}
+		else
+		{
+			$current_content = '/login.php';
+		}
 	}
-} else {
+	else
+	{
+		$current_content = '/login.php';
+		
+	}
+} 
+else 
+{
 	if(isset($_GET['content'])){
 		$current_content ='/' .  $_GET['content'] . '.php';
 	} else {

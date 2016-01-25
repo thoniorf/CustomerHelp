@@ -19,8 +19,9 @@
       <ul class="nav navbar-nav">
         <li class="<?php print ((empty($current_content) || $current_content == "/home.php")?"active":"");?>"><a href="index.php?content=home">View Tickets </a></li>
         <li class="<?php print (($current_content == "/new_ticket.php")?"active":"");?>"><a href="index.php?content=new_ticket">Create Tickets</a></li>
-        <li class="<?php print ((isset($_SESSION['user_role']) && $_SESSION['user_role']=="Moderator")?"show ":"hidden "); print (($current_content == "/admin.php")?"active":"");?>"><a href="index.php?content=admin">Administration</a></li>
-        <li class="<?php print (($current_content == "/logout.php")?"active":"");?>"><a href="index.php?content=logout">Logout</a></li>
+        <li class="<?php print ((isset($_SESSION['user_role']) && $_SESSION['user_role']=="Tecnico")?"show ":"hidden "); print (($current_content == "/admin.php")?"active":"");?>"><a href="index.php?content=admin">Administration</a></li>
+        <li class="<?php print ((isset($_SESSION['user_role']))?"show ":"hidden "); print (($current_content == "/logout.php")?"active":"");?>"><a href="index.php?content=logout">Logout</a></li>
+        <li class="<?php print ((!isset($_SESSION['user_role']))?"show ":"hidden "); print (($current_content == "/login.php")?"active":"");?>"><a href="index.php?content=login">Login</a></li>
       </ul>
       <p class="navbar-text navbar-right"><?php print((isset($_SESSION['user_id']))?"Signed in as <strong>" . $_SESSION['user_email'] . "</strong>":"Not signed in");?></p>
     </div><!-- /.navbar-collapse -->
