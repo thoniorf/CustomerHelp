@@ -8,21 +8,22 @@ if ($conn->connect_error) {
 	die ( "Connection failed: " . $conn->connect_error );
 }
 // EDIT INFORMATIONS
-if(isset($_POST['inputSubject'],$_POST['inputCategory'],$_POST['inputProduct'],$_POST['inputDescription'],$_GET['idTicket']))
+if(isset($_POST['inputSubject'],$_POST['inputCategory'],$_POST['inputProduct'],$_POST['inputDescription'],$_POST['inputLabel'],$_GET['idTicket']))
 {
 	// FILTER VARS
 	$subject = filter_var ( $_POST['inputSubject'], FILTER_SANITIZE_STRING );
 	$product = filter_var ( $_POST['inputProduct'], FILTER_SANITIZE_STRING );
 	$category = filter_var ( $_POST['inputCategory'], FILTER_SANITIZE_STRING );
 	$description = filter_var ( $_POST['inputDescription'], FILTER_SANITIZE_STRING );
+	$label = filter_var ( $_POST['inputLabel'], FILTER_SANITIZE_STRING );
 	
 	// Prepare the statemnt
-	$stmt = $conn->prepare ( "UPDATE ticketsys_db.Ticket SET Title = ?,Description = ?,Category = ?,Product = ?, LastEdit = NOW() WHERE idTicket= ?;" );
+	$stmt = $conn->prepare ( "UPDATE ticketsys_db.Ticket SET Title = ?,Description = ?,Category = ?,Product = ?,Label = ?, LastEdit = NOW() WHERE idTicket= ?;" );
 	if (!$stmt) {
 		$conn->error;
 	}
 	// Bind vars
-	if(!$stmt->bind_param ( "ssssi", $subject,$description,$category,$product,$_GET['idTicket']))
+	if(!$stmt->bind_param ( "ssssii", $subject,$description,$category,$product,$label,$_GET['idTicket']))
 		print $stmt->error;
 		// Execute, get results and fetch
 		if(!$stmt->execute()){
@@ -73,7 +74,7 @@ if($stmt->bind_result($Bind_idProduct,$Bind_Name))
 $stmt->close();
 
 // FETCH TICKET
-$query = "SELECT T.idTicket, T.Title,T.Description, T.Category, T.Product FROM ticketsys_db.Ticket as T ";
+$query = "SELECT T.idTicket, T.Title,T.Description, T.Category, T.Product, T.Label FROM ticketsys_db.Ticket as T ";
 $query .= "WHERE (T.Owner= ? OR T.AssignedTo = ? OR T.AssignedTo IS NULL) AND T.idTicket= ? ;";
 $stmt = $conn->prepare ( $query );
 if (! $stmt) {
@@ -87,7 +88,7 @@ if (! $stmt->bind_param ( "iii", $_SESSION ['user_id'], $_SESSION ['user_id'], $
 // Execute, Store and Fetch
 $stmt->execute ();
 $stmt->store_result ();
-if ($stmt->bind_result ( $Bind_id, $Bind_subject, $Bind_description, $Bind_category, $Bind_product )) {
+if ($stmt->bind_result ( $Bind_id, $Bind_subject, $Bind_description, $Bind_category, $Bind_product , $Bind_label)) {
 
 	while ( $stmt->fetch () )
 	{
@@ -95,6 +96,7 @@ if ($stmt->bind_result ( $Bind_id, $Bind_subject, $Bind_description, $Bind_categ
 		$ticket_description = $Bind_description;
 		$ticket_category = $Bind_category;
 		$ticket_product = $Bind_product;
+		$ticket_label = $Bind_label;
 	}
 }
 else
@@ -108,6 +110,7 @@ else
 {
 	$ticket_error = "show";
 }
+
 function compareOption($ticket_op,$cur_op){
 	if($ticket_op === $cur_op){
 		return "selected";
