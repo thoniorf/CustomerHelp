@@ -11,4 +11,17 @@ $INCLUDES_PATH = "./includes";
 $TEMPLATES_PATH = "./templates";
 $CONTENTS_PATH = "./contents";
 
+function buildURI($type,...$argvs) {
+	$uri = $_SERVER['PHP_SELF']."?";
+	if($type === "GET") {
+		foreach ($argvs as $var) {
+			if (isset($_GET[$var])) {
+				$uri.=$var . "=" . $_GET[$var] . "&";
+			}
+		}
+	} else {
+		die("Type isn't corrent.");
+	}
+	return $uri;
+}
 ?>
